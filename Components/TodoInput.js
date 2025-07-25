@@ -1,65 +1,64 @@
 import { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, StyleSheet } from "react-native";
 
-const TodoInput = (props) => {
-  const [enteredTodotext, setEnteredTodotext] = useState('');
+const TodoInput = ({ onTodoAdded }) => {
+  const [enteredTodoText, setEnteredTodoText] = useState('');
 
-  function enterTodoText(enteredtext) {
-    setEnteredTodotext(enteredtext);
-  }
-
-  function onPress() {
-    props.onTodoAdded(enteredTodotext);
-    setEnteredTodotext(''); 
+  function handleAddTodo() {
+    if (enteredTodoText.trim() === '') return;
+    onTodoAdded(enteredTodoText.trim());
+    setEnteredTodoText('');
   }
 
   return (
-    <View>
-      <View style={styles.flexforTodo}>
-        <TextInput
-          style={styles.TextInput}
-          onChangeText={enterTodoText}
-          value={enteredTodotext}
-          placeholder='Enter your Todo'
-        />
-      </View>
-
-      <View style={styles.flexforbutton}>
-        <Button title='Add Todo' color={'#ff0079ff'} onPress={onPress} />
-      </View>
+    <View style={styles.inputContainer}>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Enter your Todo"
+        placeholderTextColor="#aaa"
+        onChangeText={setEnteredTodoText}
+        value={enteredTodoText}
+      />
+      <TouchableOpacity style={styles.addButton} onPress={handleAddTodo}>
+        <Text style={styles.addButtonText}>Add Todo</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 export default TodoInput;
 
 const styles = StyleSheet.create({
-  flexforTodo: {
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderBlockColor: '#cccccc',
-    paddingBottom: 10,
+  inputContainer: {
     padding: 20,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 16,
+    margin: 10,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  textInput: {
+    borderWidth: 1.2,
+    borderColor: '#ddd',
+    borderRadius: 12,
+    fontSize: 16,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     marginBottom: 10,
+    color: '#333',
+    backgroundColor: '#fff',
   },
-  flexforbutton: {
-    justifyContent: 'space-around',
+  addButton: {
+    backgroundColor: '#ff0079',
+    paddingVertical: 12,
+    borderRadius: 12,
     alignItems: 'center',
-    borderRadius: 19,
-    borderBottomWidth: 1,
-    borderBlockColor: '#cccccc',
-    paddingBottom: 10,
-    marginBottom: 2,
   },
-  TextInput: {
-    borderWidth: 1.5,
-    borderColor: '#cccccc',
-    borderRadius: 200,
-    fontSize: 20,
-    color: '#ff0079ff',
-    width: '90%',
-    paddingLeft: 20,
-    marginRight: 5,
-    padding: 10,
+  addButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });

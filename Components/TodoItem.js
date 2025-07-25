@@ -1,28 +1,25 @@
- import { StyleSheet,Text,Pressable } from "react-native";
- const todoItem = (props) => {
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-    function deleteaHandler(){
-        props.onDelete(props.id)
-    }
-    return ( 
-        <Pressable onPress={deleteaHandler}>
-        <Text style={styles.todo} >{props.Text }</Text>
-        </Pressable>
-     );
-}
- 
-export default todoItem;
-const styles=StyleSheet.create({
-    todo:{
-        borderWidth:1,
-        borderColor:'#cccccc',
-        marginVertical:5,
-        padding:12,
-        textAlign:'center',
-        fontSize:20,
-        fontWeight:'500',
-        backgroundColor:'#ff0079ff',
-        color:'white', 
-        borderRadius:200,
-      },
-})
+const TodoItem = ({ Text: title, onDelete, id }) => {
+  return (
+    <TouchableOpacity onPress={() => onDelete(id)} activeOpacity={0.7}>
+      <Text style={styles.todo}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
+
+export default TodoItem;
+
+const styles = StyleSheet.create({
+  todo: {
+    backgroundColor: '#ff0079',
+    color: 'white',
+    fontSize: 18,
+    padding: 14,
+    marginVertical: 6,
+    marginHorizontal: 16,
+    borderRadius: 12,
+    textAlign: 'center',
+    elevation: 2,
+  },
+});
